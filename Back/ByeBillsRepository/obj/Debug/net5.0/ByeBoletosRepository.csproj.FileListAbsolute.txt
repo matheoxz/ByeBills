@@ -1,0 +1,15 @@
+C:\Users\matheus.novaes\Documents\Flutter\ByeBoletos\ByeBoletosRepository\bin\Debug\net5.0\ByeBoletosRepository.deps.json
+C:\Users\matheus.novaes\Documents\Flutter\ByeBoletos\ByeBoletosRepository\bin\Debug\net5.0\ByeBoletosRepository.runtimeconfig.json
+C:\Users\matheus.novaes\Documents\Flutter\ByeBoletos\ByeBoletosRepository\bin\Debug\net5.0\ByeBoletosRepository.runtimeconfig.dev.json
+C:\Users\matheus.novaes\Documents\Flutter\ByeBoletos\ByeBoletosRepository\bin\Debug\net5.0\ByeBoletosRepository.dll
+C:\Users\matheus.novaes\Documents\Flutter\ByeBoletos\ByeBoletosRepository\bin\Debug\net5.0\ref\ByeBoletosRepository.dll
+C:\Users\matheus.novaes\Documents\Flutter\ByeBoletos\ByeBoletosRepository\bin\Debug\net5.0\ByeBoletosRepository.pdb
+C:\Users\matheus.novaes\Documents\Flutter\ByeBoletos\ByeBoletosRepository\obj\Debug\net5.0\ByeBoletosRepository.csprojAssemblyReference.cache
+C:\Users\matheus.novaes\Documents\Flutter\ByeBoletos\ByeBoletosRepository\obj\Debug\net5.0\ByeBoletosRepository.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\matheus.novaes\Documents\Flutter\ByeBoletos\ByeBoletosRepository\obj\Debug\net5.0\ByeBoletosRepository.AssemblyInfoInputs.cache
+C:\Users\matheus.novaes\Documents\Flutter\ByeBoletos\ByeBoletosRepository\obj\Debug\net5.0\ByeBoletosRepository.AssemblyInfo.cs
+C:\Users\matheus.novaes\Documents\Flutter\ByeBoletos\ByeBoletosRepository\obj\Debug\net5.0\ByeBoletosRepository.csproj.CoreCompileInputs.cache
+C:\Users\matheus.novaes\Documents\Flutter\ByeBoletos\ByeBoletosRepository\obj\Debug\net5.0\ByeBoletosRepository.dll
+C:\Users\matheus.novaes\Documents\Flutter\ByeBoletos\ByeBoletosRepository\obj\Debug\net5.0\ref\ByeBoletosRepository.dll
+C:\Users\matheus.novaes\Documents\Flutter\ByeBoletos\ByeBoletosRepository\obj\Debug\net5.0\ByeBoletosRepository.pdb
+C:\Users\matheus.novaes\Documents\Flutter\ByeBoletos\ByeBoletosRepository\obj\Debug\net5.0\ByeBoletosRepository.genruntimeconfig.cache
