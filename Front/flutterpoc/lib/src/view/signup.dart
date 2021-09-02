@@ -56,7 +56,6 @@ class SignUpPage extends StatelessWidget {
   _form(context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
-      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Align(
           alignment: Alignment.bottomCenter,
@@ -114,7 +113,7 @@ class SignUpPage extends StatelessWidget {
       decoration: InputDecoration(
           labelText: label,
           labelStyle: TextStyle(fontSize: 20, color: Colors.grey),
-          floatingLabelBehavior: FloatingLabelBehavior.never,
+          floatingLabelBehavior: FloatingLabelBehavior.auto,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
           prefixIcon: Icon(icon)),
     );

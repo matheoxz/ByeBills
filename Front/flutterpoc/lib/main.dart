@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterpoc/src/view/login.dart';
+import 'package:flutterpoc/src/view/new_bill.dart';
+import 'package:flutterpoc/src/view/signup.dart';
 import 'package:flutterpoc/src/view/unknown.dart';
 
 void main() {
@@ -11,11 +13,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'ByeBills',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'ByeBills'),
     );
   }
 }

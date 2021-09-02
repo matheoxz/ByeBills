@@ -131,7 +131,7 @@ class _NewBillPageState extends State<NewBillPage> {
       decoration: InputDecoration(
           labelText: label,
           labelStyle: TextStyle(fontSize: 20, color: Colors.grey),
-          floatingLabelBehavior: FloatingLabelBehavior.never,
+          floatingLabelBehavior: FloatingLabelBehavior.auto,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
           prefixIcon: Icon(icon)),
     );
@@ -142,7 +142,7 @@ class _NewBillPageState extends State<NewBillPage> {
       controller: _dateTimeController,
       keyboardType: TextInputType.datetime,
       decoration: InputDecoration(
-        labelText: "expirations date",
+        labelText: "expiration date",
         labelStyle: TextStyle(fontSize: 20, color: Colors.grey),
         floatingLabelBehavior: FloatingLabelBehavior.never,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
@@ -170,11 +170,12 @@ class _NewBillPageState extends State<NewBillPage> {
       ],
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
-          labelText: "\$0,00",
-          labelStyle: TextStyle(fontSize: 20, color: Colors.grey),
-          floatingLabelBehavior: FloatingLabelBehavior.never,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-          prefixIcon: Icon(Icons.money)),
+        labelText: "\$0,00",
+        labelStyle: TextStyle(fontSize: 20, color: Colors.grey),
+        floatingLabelBehavior: FloatingLabelBehavior.never,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+        prefixIcon: Icon(Icons.attach_money),
+      ),
     );
   }
 

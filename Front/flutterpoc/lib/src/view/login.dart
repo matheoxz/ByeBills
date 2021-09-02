@@ -45,16 +45,6 @@ class LoginPage extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     double fontSize = width < height ? height / 7 : width / 10;
-    // return TextLiquidFill(
-    //   text: 'BYE\n   BILLS',
-    //   waveColor: Colors.teal.shade400,
-    //   boxWidth: width,
-    //   boxBackgroundColor: Colors.amber.shade300,
-    //   loadDuration: const Duration(seconds: 15),
-    //   waveDuration: const Duration(seconds: 15),
-    //   loadUntil: 0.7,
-    //   textStyle: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold),
-    // );
     return AnimatedColorText(
       text: "BYE\nBILLS",
       tween: ColorTween(begin: Colors.amber, end: Colors.teal),
@@ -92,7 +82,7 @@ class LoginPage extends StatelessWidget {
       decoration: InputDecoration(
           labelText: "email",
           labelStyle: TextStyle(fontSize: 20, color: Colors.grey),
-          floatingLabelBehavior: FloatingLabelBehavior.never,
+          floatingLabelBehavior: FloatingLabelBehavior.auto,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(15))),
     );
   }
@@ -106,7 +96,7 @@ class LoginPage extends StatelessWidget {
       decoration: InputDecoration(
           labelText: "password",
           labelStyle: TextStyle(fontSize: 20, color: Colors.grey),
-          floatingLabelBehavior: FloatingLabelBehavior.never,
+          floatingLabelBehavior: FloatingLabelBehavior.auto,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(15))),
     );
   }

@@ -1,12 +1,14 @@
+import 'dart:ffi';
+
 import 'package:flutterpoc/src/models/bill.dart';
 import 'package:flutterpoc/src/models/user.dart';
 
 class MyAppConfiguration {
-  final bool loggedIn;
-  final bool newBill;
-  final bool newAccount;
-  final bool error;
-  final bool unknown;
+  final bool? loggedIn;
+  final bool? newBill;
+  final bool? newAccount;
+  final bool? error;
+  final bool? unknown;
   final UserModel? loggedUser;
   final BillModel? billDetail;
 
@@ -19,7 +21,7 @@ class MyAppConfiguration {
         loggedUser = null,
         billDetail = null;
 
-  MyAppConfiguration.newAccount()
+  MyAppConfiguration.signup()
       : loggedIn = false,
         newBill = false,
         newAccount = true,
@@ -65,19 +67,19 @@ class MyAppConfiguration {
         billDetail = null;
 
   MyAppConfiguration.unknown()
-      : loggedIn = false,
-        newBill = false,
-        newAccount = false,
+      : loggedIn = null,
+        newBill = null,
+        newAccount = null,
         unknown = true,
-        error = false,
+        error = null,
         loggedUser = null,
         billDetail = null;
 
   MyAppConfiguration.error()
-      : loggedIn = false,
-        newBill = false,
-        newAccount = false,
-        unknown = false,
+      : loggedIn = null,
+        newBill = null,
+        newAccount = null,
+        unknown = null,
         error = true,
         loggedUser = null,
         billDetail = null;

@@ -24,7 +24,7 @@ class UnknownPage extends StatelessWidget {
       loadDuration: const Duration(seconds: 15),
       waveDuration: const Duration(seconds: 15),
       loadUntil: 0.7,
-      boxBackgroundColor: Colors.amber.shade300,
+      boxBackgroundColor: Colors.amber,
       textStyle: TextStyle(
         fontSize: fontSize,
         fontWeight: FontWeight.bold,

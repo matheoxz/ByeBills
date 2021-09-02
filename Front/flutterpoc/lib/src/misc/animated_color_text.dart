@@ -28,10 +28,10 @@ class AnimatedColorText extends StatefulWidget {
 
 class _ColorTextState extends State<AnimatedColorText>
     with TickerProviderStateMixin {
-  AnimationController? controller;
-  AnimationController? positionController;
-  Animation<double?>? _positionAnim;
-  Animation<Color?>? _colorAnim;
+  late AnimationController controller;
+  late AnimationController positionController;
+  late Animation<double?> _positionAnim;
+  late Animation<Color?> _colorAnim;
 
   String text;
   ColorTween tween;
@@ -51,31 +51,31 @@ class _ColorTextState extends State<AnimatedColorText>
         AnimationController(vsync: this, duration: lightDuration);
     controller = AnimationController(
         duration: colorDuration, reverseDuration: colorDuration, vsync: this);
-    _colorAnim = tween.animate(controller!)
+    _colorAnim = tween.animate(controller)
       ..addListener(() {
         setState(() {});
       })
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
-          controller!.reverse();
+          controller.reverse();
         } else if (status == AnimationStatus.dismissed) {
-          controller!.forward();
+          controller.forward();
         }
       });
 
-    _positionAnim = Tween(begin: -1.0, end: 2.0).animate(positionController!)
+    _positionAnim = Tween(begin: -1.0, end: 2.0).animate(positionController)
       ..addListener(() {
         setState(() {});
       })
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
-          positionController!.reset();
-          positionController!.forward();
+          positionController.reset();
+          positionController.forward();
         }
       });
 
-    controller!.forward();
-    positionController!.forward();
+    controller.forward();
+    positionController.forward();
   }
 
   @override
@@ -89,13 +89,13 @@ class _ColorTextState extends State<AnimatedColorText>
         ),
         shaderCallback: (rect) {
           return LinearGradient(stops: [
-            _positionAnim!.value! - 1,
-            _positionAnim!.value!,
-            _positionAnim!.value! + 1
+            _positionAnim.value! - 1,
+            _positionAnim.value!,
+            _positionAnim.value! + 1
           ], colors: [
-            _colorAnim!.value!,
-            _colorAnim!.value!.withAlpha(120),
-            _colorAnim!.value!,
+            _colorAnim.value!,
+            _colorAnim.value!.withAlpha(120),
+            _colorAnim.value!,
           ]).createShader(rect);
         });
   }
