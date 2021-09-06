@@ -1,25 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\matheus.novaes\\Documents\\Flutter\\Back\\ByeBills\\ByeBills.csproj": {}
+    "C:\\Users\\lucas.silva\\Desktop\\FlutterPoc\\ByeBills\\Back\\ByeBills\\ByeBills.csproj": {}
   },
   "projects": {
-    "C:\\Users\\matheus.novaes\\Documents\\Flutter\\Back\\ByeBillsRepository\\ByeBillsRepository.csproj": {
+    "C:\\Users\\lucas.silva\\Desktop\\FlutterPoc\\ByeBills\\Back\\ByeBillsRepository\\ByeBillsRepository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\matheus.novaes\\Documents\\Flutter\\Back\\ByeBillsRepository\\ByeBillsRepository.csproj",
+        "projectUniqueName": "C:\\Users\\lucas.silva\\Desktop\\FlutterPoc\\ByeBills\\Back\\ByeBillsRepository\\ByeBillsRepository.csproj",
         "projectName": "ByeBillsRepository",
-        "projectPath": "C:\\Users\\matheus.novaes\\Documents\\Flutter\\Back\\ByeBillsRepository\\ByeBillsRepository.csproj",
-        "packagesPath": "C:\\Users\\matheus.novaes\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\matheus.novaes\\Documents\\Flutter\\Back\\ByeBillsRepository\\obj\\",
+        "projectPath": "C:\\Users\\lucas.silva\\Desktop\\FlutterPoc\\ByeBills\\Back\\ByeBillsRepository\\ByeBillsRepository.csproj",
+        "packagesPath": "C:\\Users\\lucas.silva\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\lucas.silva\\Desktop\\FlutterPoc\\ByeBills\\Back\\ByeBillsRepository\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\matheus.novaes\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\lucas.silva\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -88,26 +84,22 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\matheus.novaes\\Documents\\Flutter\\Back\\ByeBills\\ByeBills.csproj": {
+    "C:\\Users\\lucas.silva\\Desktop\\FlutterPoc\\ByeBills\\Back\\ByeBills\\ByeBills.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\matheus.novaes\\Documents\\Flutter\\Back\\ByeBills\\ByeBills.csproj",
+        "projectUniqueName": "C:\\Users\\lucas.silva\\Desktop\\FlutterPoc\\ByeBills\\Back\\ByeBills\\ByeBills.csproj",
         "projectName": "ByeBills",
-        "projectPath": "C:\\Users\\matheus.novaes\\Documents\\Flutter\\Back\\ByeBills\\ByeBills.csproj",
-        "packagesPath": "C:\\Users\\matheus.novaes\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\matheus.novaes\\Documents\\Flutter\\Back\\ByeBills\\obj\\",
+        "projectPath": "C:\\Users\\lucas.silva\\Desktop\\FlutterPoc\\ByeBills\\Back\\ByeBills\\ByeBills.csproj",
+        "packagesPath": "C:\\Users\\lucas.silva\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\lucas.silva\\Desktop\\FlutterPoc\\ByeBills\\Back\\ByeBills\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\matheus.novaes\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\lucas.silva\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -120,8 +112,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\matheus.novaes\\Documents\\Flutter\\Back\\ByeBillsRepository\\ByeBillsRepository.csproj": {
-                "projectPath": "C:\\Users\\matheus.novaes\\Documents\\Flutter\\Back\\ByeBillsRepository\\ByeBillsRepository.csproj"
+              "C:\\Users\\lucas.silva\\Desktop\\FlutterPoc\\ByeBills\\Back\\ByeBillsRepository\\ByeBillsRepository.csproj": {
+                "projectPath": "C:\\Users\\lucas.silva\\Desktop\\FlutterPoc\\ByeBills\\Back\\ByeBillsRepository\\ByeBillsRepository.csproj"
               }
             }
           }
@@ -179,7 +171,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

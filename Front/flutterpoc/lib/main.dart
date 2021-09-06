@@ -3,6 +3,11 @@ import 'config/configure_nonweb.dart'
     if (dart.library.html) 'config/configure_web.dart';
 import 'package:flutterpoc/src/route/router_delegate.dart';
 import 'package:flutterpoc/src/route/router_parser.dart';
+import 'package:flutterpoc/src/view/login.dart';
+import 'package:flutterpoc/src/view/new_bill.dart';
+import 'package:flutterpoc/src/view/signup.dart';
+import 'package:flutterpoc/src/view/unknown.dart';
+import 'package:flutterpoc/src/view/configurations.dart';
 
 void main() {
   configureApp();
