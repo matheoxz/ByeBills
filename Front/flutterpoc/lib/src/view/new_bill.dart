@@ -2,14 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutterpoc/src/misc/currency_formatter.dart';
 
-class NewBillPage extends StatefulWidget {
-  NewBillPage({Key? key}) : super(key: key);
+class NewBill extends StatefulWidget {
+  final Function() onBack;
+  NewBill({Key? key, required this.onBack}) : super(key: key);
 
   @override
-  _NewBillPageState createState() => _NewBillPageState();
+  _NewBillState createState() => _NewBillState(onBack: onBack);
 }
 
-class _NewBillPageState extends State<NewBillPage> {
+class _NewBillState extends State<NewBill> {
+  final Function() onBack;
+
+  _NewBillState({required this.onBack});
+
   final _nameController = TextEditingController();
 
   final _descriptionController = TextEditingController();
@@ -37,7 +42,7 @@ class _NewBillPageState extends State<NewBillPage> {
       backgroundColor: Colors.teal.shade300,
       leading: IconButton(
         icon: Icon(Icons.arrow_back, color: Colors.white),
-        onPressed: () => {/*navigator*/},
+        onPressed: onBack,
       ),
     );
   }
@@ -199,7 +204,9 @@ class _NewBillPageState extends State<NewBillPage> {
     );
   }
 
-  _addBill() {}
+  _addBill() {
+    onBack();
+  }
 
   _sizedBox({double space = 10}) {
     return SizedBox(height: space, width: space);

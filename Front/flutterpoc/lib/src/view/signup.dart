@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-class SignUpPage extends StatelessWidget {
-  SignUpPage({Key? key}) : super(key: key);
+class SignUp extends StatelessWidget {
+  final Function() onPop;
+
+  SignUp({Key? key, required this.onPop}) : super(key: key);
   final _nameController = TextEditingController();
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -22,8 +24,8 @@ class SignUpPage extends StatelessWidget {
       centerTitle: true,
       backgroundColor: Colors.teal.shade300,
       leading: IconButton(
+        onPressed: onPop,
         icon: Icon(Icons.arrow_back, color: Colors.white),
-        onPressed: () => {/*navigator*/},
       ),
     );
   }
@@ -77,27 +79,25 @@ class SignUpPage extends StatelessWidget {
   }
 
   _textFields() {
-    return Flexible(
-      child: Form(
-        child: ListView(
-          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-          children: [
-            _field(_nameController, _nameValidation, "name", Icons.person),
-            _sizedBox(),
-            _field(_usernameController, _nameValidation, "username",
-                Icons.alternate_email),
-            _sizedBox(),
-            _field(_emailController, _emailValidation, "email", Icons.email),
-            _sizedBox(space: 25),
-            _field(_passwordController, _nameValidation, "password",
-                Icons.lock_open,
-                password: true),
-            _sizedBox(),
-            _field(_confirmPasswordController, _confirmPasswordValidation,
-                "confirm password", Icons.lock,
-                password: true)
-          ],
-        ),
+    return Form(
+      child: ListView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+        children: [
+          _field(_nameController, _nameValidation, "name", Icons.person),
+          _sizedBox(),
+          _field(_usernameController, _nameValidation, "username",
+              Icons.alternate_email),
+          _sizedBox(),
+          _field(_emailController, _emailValidation, "email", Icons.email),
+          _sizedBox(space: 25),
+          _field(
+              _passwordController, _nameValidation, "password", Icons.lock_open,
+              password: true),
+          _sizedBox(),
+          _field(_confirmPasswordController, _confirmPasswordValidation,
+              "confirm password", Icons.lock,
+              password: true)
+        ],
       ),
     );
   }

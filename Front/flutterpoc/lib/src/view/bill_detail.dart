@@ -1,15 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutterpoc/src/misc/currency_formatter.dart';
+import 'package:flutterpoc/src/models/bill.dart';
 
-class BillDetailPage extends StatefulWidget {
-  BillDetailPage({Key? key}) : super(key: key);
+class BillDetail extends StatefulWidget {
+  final int billId;
+  final Function() onBack;
+
+  BillDetail({Key? key, required this.billId, required this.onBack})
+      : super(key: key);
 
   @override
-  _BillDetailPageState createState() => _BillDetailPageState();
+  _BillDetailState createState() =>
+      _BillDetailState(billId: billId, onBack: onBack);
 }
 
-class _BillDetailPageState extends State<BillDetailPage> {
+class _BillDetailState extends State<BillDetail> {
+  final billId;
+  final Function() onBack;
+
+  _BillDetailState({required this.billId, required this.onBack});
+
+  late BillModel bill;
+
   final _nameController = TextEditingController();
 
   final _descriptionController = TextEditingController();
@@ -22,16 +35,31 @@ class _BillDetailPageState extends State<BillDetailPage> {
 
   final _barcodeController = TextEditingController();
 
+  List<BillModel> bills = [
+    BillModel(1, "AAAA", "description", DateTime.now(), 20.0, "654654654"),
+    BillModel(2, "BBBB", "description", DateTime.now(), 500.0, "654654654"),
+    BillModel(3, "CCCC", "description", DateTime.now(), 1000.0, "654654654"),
+    BillModel(4, "DDDD", "description", DateTime.now(), 5.0, "654654654"),
+    BillModel(5, "AAAA", "description", DateTime.now(), 20.0, "654654654"),
+    BillModel(6, "BBBB", "description", DateTime.now(), 500.0, "654654654"),
+    BillModel(7, "CCCC", "description", DateTime.now(), 1000.0, "654654654"),
+    BillModel(8, "DDDD", "description", DateTime.now(), 5.0, "654654654"),
+    BillModel(9, "AAAA", "description", DateTime.now(), 20.0, "654654654"),
+    BillModel(10, "BBBB", "description", DateTime.now(), 500.0, "654654654"),
+    BillModel(11, "CCCC", "description", DateTime.now(), 1000.0, "654654654"),
+    BillModel(12, "DDDD", "description", DateTime.now(), 5.0, "654654654"),
+  ];
+
   @override
   void initState() {
-    // TODO: implement initState
-    _nameController.text = "#Bill name";
-    _descriptionController.text = "groceries";
-    _dateTime = DateTime.now();
+    bill = bills.where((element) => element.id == billId).first;
+    _nameController.text = bill.name;
+    _descriptionController.text = bill.description;
+    _dateTime = bill.payday;
     _dateTimeController.text =
         "${_dateTime!.day}/${_dateTime!.month}/${_dateTime!.year}";
-    _valueController.text = "R\$ 100,00";
-    _barcodeController.text = "1323 6546 9978 654 5 55 64654";
+    _valueController.text = "R\$ ${bill.value}";
+    _barcodeController.text = bill.barcode;
 
     super.initState();
   }
@@ -46,12 +74,12 @@ class _BillDetailPageState extends State<BillDetailPage> {
 
   _appBar() {
     return AppBar(
-      title: Text("#Bill name"),
+      title: Text(bill.name),
       centerTitle: true,
       backgroundColor: Colors.teal.shade300,
       leading: IconButton(
         icon: Icon(Icons.arrow_back, color: Colors.white),
-        onPressed: () => {/*navigator*/},
+        onPressed: onBack,
       ),
     );
   }
@@ -188,7 +216,7 @@ class _BillDetailPageState extends State<BillDetailPage> {
       controller: _valueController,
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
-        CurrencyInputFormatter("pt-br")
+        CurrencyInputFormatter(locale)
       ],
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
@@ -235,9 +263,13 @@ class _BillDetailPageState extends State<BillDetailPage> {
     );
   }
 
-  _updateBill() {}
+  _updateBill() {
+    onBack();
+  }
 
-  _deleteBill() {}
+  _deleteBill() {
+    onBack();
+  }
 
   _sizedBox({double space = 10}) {
     return SizedBox(height: space, width: space);

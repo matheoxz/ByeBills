@@ -1,38 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:flutterpoc/src/view/login.dart';
-import 'package:flutterpoc/src/view/new_bill.dart';
-import 'package:flutterpoc/src/view/signup.dart';
-import 'package:flutterpoc/src/view/unknown.dart';
+import 'config/configure_nonweb.dart'
+    if (dart.library.html) 'config/configure_web.dart';
+import 'package:flutterpoc/src/route/router_delegate.dart';
+import 'package:flutterpoc/src/route/router_parser.dart';
 
 void main() {
-  runApp(MyApp());
+  configureApp();
+  runApp(ByeBills());
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class ByeBills extends StatefulWidget {
+  ByeBills({Key? key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'ByeBills',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'ByeBills'),
-    );
+  _ByeBillsState createState() => _ByeBillsState();
+}
+
+class _ByeBillsState extends State<ByeBills> {
+  late BillRouteParser routeParser;
+  late BillsRouterDelegate routerDelegate;
+
+  @override
+  void initState() {
+    routeParser = BillRouteParser();
+    routerDelegate = BillsRouterDelegate();
+    super.initState();
   }
-}
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return UnknownPage();
+    return MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        title: "ByeBills",
+        routeInformationParser: routeParser,
+        routerDelegate: routerDelegate);
   }
 }

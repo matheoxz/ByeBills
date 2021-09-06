@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutterpoc/src/misc/animated_color_text.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({Key? key}) : super(key: key);
+class Login extends StatelessWidget {
+  final Function() onSignUp;
+  final Function() onLogin;
+
+  Login({Key? key, required this.onLogin, required this.onSignUp})
+      : super(key: key);
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -53,23 +57,21 @@ class LoginPage extends StatelessWidget {
   }
 
   _form(BuildContext context) {
-    return Flexible(
-      child: Form(
-        child: ListView(
-          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-          children: [
-            _sizedBox(),
-            emailField(),
-            _sizedBox(),
-            passwordField(),
-            _sizedBox(),
-            loginButton(),
-            _sizedBox(),
-            signupButton(),
-            _sizedBox(),
-            forgotPasswordButton(),
-          ],
-        ),
+    return Form(
+      child: ListView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+        children: [
+          _sizedBox(),
+          emailField(),
+          _sizedBox(),
+          passwordField(),
+          _sizedBox(),
+          loginButton(),
+          _sizedBox(),
+          signupButton(),
+          _sizedBox(),
+          forgotPasswordButton(),
+        ],
       ),
     );
   }
@@ -103,7 +105,7 @@ class LoginPage extends StatelessWidget {
 
   loginButton() {
     return TextButton(
-      onPressed: _login,
+      onPressed: onLogin,
       child: Text(
         "login",
         style: TextStyle(color: Colors.white, fontSize: 20),
@@ -118,7 +120,7 @@ class LoginPage extends StatelessWidget {
 
   signupButton() {
     return TextButton(
-      onPressed: _newAccount,
+      onPressed: onSignUp,
       child: Text(
         "sign up",
         style: TextStyle(color: Colors.white, fontSize: 20),
@@ -156,10 +158,6 @@ class LoginPage extends StatelessWidget {
     if (text!.isEmpty) return "Invalid password";
     return null;
   }
-
-  _login() {}
-
-  _newAccount() {}
 
   _forgotPassword() {}
 

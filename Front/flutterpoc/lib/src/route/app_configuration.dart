@@ -1,16 +1,11 @@
-import 'dart:ffi';
-
-import 'package:flutterpoc/src/models/bill.dart';
-import 'package:flutterpoc/src/models/user.dart';
-
 class MyAppConfiguration {
   final bool? loggedIn;
   final bool? newBill;
   final bool? newAccount;
   final bool? error;
   final bool? unknown;
-  final UserModel? loggedUser;
-  final BillModel? billDetail;
+  final bool? configurations;
+  final int? billDetail;
 
   MyAppConfiguration.login()
       : loggedIn = false,
@@ -18,7 +13,7 @@ class MyAppConfiguration {
         newAccount = false,
         unknown = false,
         error = false,
-        loggedUser = null,
+        configurations = null,
         billDetail = null;
 
   MyAppConfiguration.signup()
@@ -27,16 +22,16 @@ class MyAppConfiguration {
         newAccount = true,
         unknown = false,
         error = false,
-        loggedUser = null,
+        configurations = null,
         billDetail = null;
 
-  MyAppConfiguration.billsList()
+  MyAppConfiguration.bills()
       : loggedIn = true,
         newBill = false,
         newAccount = false,
         unknown = false,
         error = false,
-        loggedUser = null,
+        configurations = null,
         billDetail = null;
 
   MyAppConfiguration.newBill()
@@ -45,25 +40,25 @@ class MyAppConfiguration {
         newAccount = false,
         unknown = false,
         error = false,
-        loggedUser = null,
+        configurations = null,
         billDetail = null;
 
-  MyAppConfiguration.billDetail(BillModel bill)
+  MyAppConfiguration.billDetail(int billId)
       : loggedIn = true,
         newBill = false,
         newAccount = false,
         unknown = false,
         error = false,
-        loggedUser = null,
-        billDetail = bill;
+        configurations = null,
+        billDetail = billId;
 
-  MyAppConfiguration.configurations(UserModel user)
+  MyAppConfiguration.configurations()
       : loggedIn = true,
         newBill = false,
         newAccount = false,
         unknown = false,
         error = false,
-        loggedUser = user,
+        configurations = true,
         billDetail = null;
 
   MyAppConfiguration.unknown()
@@ -72,7 +67,7 @@ class MyAppConfiguration {
         newAccount = null,
         unknown = true,
         error = null,
-        loggedUser = null,
+        configurations = null,
         billDetail = null;
 
   MyAppConfiguration.error()
@@ -81,6 +76,17 @@ class MyAppConfiguration {
         newAccount = null,
         unknown = null,
         error = true,
-        loggedUser = null,
+        configurations = null,
         billDetail = null;
+
+  bool get isUnknown => unknown == true;
+  bool get isError => error == true;
+  bool get isLogin => loggedIn == false && newAccount == false;
+  bool get isSignUp => loggedIn == false && newAccount == true;
+  bool get isBills => loggedIn == true && newBill == false;
+  bool get isNewBill => loggedIn == true && newBill == true;
+  bool get isBillDetail =>
+      loggedIn == true && newBill == false && billDetail != null;
+  bool get isConfigurations =>
+      loggedIn == true && newBill == false && configurations == true;
 }

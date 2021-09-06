@@ -79,6 +79,13 @@ class _ColorTextState extends State<AnimatedColorText>
   }
 
   @override
+  void dispose() {
+    controller.dispose();
+    positionController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ShaderMask(
         child: Text(
