@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
 
-class ConfigurationPage extends StatelessWidget {
-  ConfigurationPage({Key? key}) : super(key: key);
+class ConfigurationsPageView extends StatelessWidget {
+  final Function() onBack;
+  final Function() onLogOut;
+  final Function() onDeleteAccount;
+
+  ConfigurationsPageView(
+      {required this.onBack,
+      required this.onLogOut,
+      required this.onDeleteAccount,
+      Key? key})
+      : super(key: key);
+
   String _name = "Jauzin";
   String _username = "jaum12";
   String _email = "jau@unesp.br";
@@ -23,7 +33,7 @@ class ConfigurationPage extends StatelessWidget {
           backgroundColor: Colors.teal.shade300,
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => {/*navigator*/},
+            onPressed: onBack,
           )),
       body: SingleChildScrollView(
         child: Column(
@@ -75,7 +85,7 @@ class ConfigurationPage extends StatelessWidget {
         backgroundColor: Colors.teal.shade300,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => {/*navigator*/},
+          onPressed: onBack,
         ),
       ),
       body: SingleChildScrollView(
@@ -189,7 +199,7 @@ class ConfigurationPage extends StatelessWidget {
     return RawMaterialButton(
       fillColor: Colors.amberAccent,
       splashColor: Colors.amberAccent.shade100,
-      onPressed: () => {/*naviiii*/},
+      onPressed: onLogOut,
       shape: StadiumBorder(),
       child: Row(
         mainAxisSize: MainAxisSize.max,
@@ -218,7 +228,7 @@ class ConfigurationPage extends StatelessWidget {
     return RawMaterialButton(
       fillColor: Colors.red.shade400,
       splashColor: Colors.red.shade300,
-      onPressed: () => {/*naviiii*/},
+      onPressed: onDeleteAccount,
       shape: StadiumBorder(),
       child: Row(
         mainAxisSize: MainAxisSize.max,
