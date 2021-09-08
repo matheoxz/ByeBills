@@ -149,6 +149,9 @@ class BillsRouterDelegate extends RouterDelegate<MyAppConfiguration>
       stack = [
         SignUpPage(onPop: () {
           signup = false;
+        }, onSignUp: () {
+          signup = false;
+          loggedIn = true;
         })
       ];
     else if (loggedIn) {

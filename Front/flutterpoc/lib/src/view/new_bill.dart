@@ -61,7 +61,7 @@ class _NewBillState extends State<NewBill> {
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                child: _form(context),
+                child: _page(context),
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.height / 2,
               ),
@@ -72,7 +72,7 @@ class _NewBillState extends State<NewBill> {
     );
   }
 
-  _form(context) {
+  _page(context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       //mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,7 +80,7 @@ class _NewBillState extends State<NewBill> {
         Align(
           alignment: Alignment.bottomCenter,
           child: Container(
-            child: _textFields(),
+            child: _form(),
             height: MediaQuery.of(context).size.height * 0.7,
             width: MediaQuery.of(context).size.height / 2,
           ),
@@ -96,15 +96,18 @@ class _NewBillState extends State<NewBill> {
     );
   }
 
-  _textFields() {
+  final _formKey = GlobalKey<FormState>();
+
+  _form() {
     return Flexible(
+      key: _formKey,
       child: Form(
         child: ListView(
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           children: [
-            _field(_nameController, _nameValidation, "name", Icons.tag),
+            _field(_nameController, _fieldValidation, "name", Icons.tag),
             _sizedBox(),
-            _field(_descriptionController, _nameValidation, "description",
+            _field(_descriptionController, _fieldValidation, "description",
                 Icons.text_fields,
                 maxLines: 5),
             _sizedBox(),
@@ -114,7 +117,7 @@ class _NewBillState extends State<NewBill> {
             _sizedBox(),
             _field(
               _barcodeController,
-              _nameValidation,
+              _fieldValidation,
               "barcode",
               Icons.qr_code,
             )
@@ -125,11 +128,11 @@ class _NewBillState extends State<NewBill> {
   }
 
   TextFormField _field(TextEditingController controller,
-      String? Function(String?) validator, String label, IconData icon,
+      String? Function(String, String?) validator, String label, IconData icon,
       {bool password = false, int maxLines = 1}) {
     return TextFormField(
       controller: controller,
-      validator: validator,
+      validator: (value) => validator(label, value),
       keyboardType: TextInputType.text,
       obscureText: password,
       maxLines: maxLines,
@@ -184,8 +187,8 @@ class _NewBillState extends State<NewBill> {
     );
   }
 
-  String? _nameValidation(String? value) {
-    if (value!.isEmpty) return ('Invalid field');
+  String? _fieldValidation(String fieldName, String? value) {
+    if (value!.isEmpty) return ('Invalid $fieldName');
     return null;
   }
 
@@ -205,7 +208,15 @@ class _NewBillState extends State<NewBill> {
   }
 
   _addBill() {
-    onBack();
+    if (_formKey.currentState!.validate()) {
+      try {} catch (e) {}
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        backgroundColor: Colors.amber,
+        content: Text("invalid fields, please fill it correctly"),
+        elevation: 5.0,
+      ));
+    }
   }
 
   _sizedBox({double space = 10}) {

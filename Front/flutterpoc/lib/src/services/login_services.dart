@@ -13,7 +13,7 @@ class LoginServices extends ILoginServices {
 
   @override
   Future<bool> login(String email, String password) async {
-    var res = await http.post(Uri.https('localhost:44305', 'api/User/login'),
+    var res = await http.post(Uri.https('172.30.16.1:44305', 'api/User/login'),
         body: '{"email":"$email", "password":"$password"}',
         headers: {
           'Content-Type': 'application/json',
