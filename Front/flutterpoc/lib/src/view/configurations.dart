@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ConfigurationsPageView extends StatelessWidget {
+class Configurations extends StatelessWidget {
   final Function() onBack;
   final Function() onLogOut;
   final Function() onDeleteAccount;
 
-  ConfigurationsPageView(
+  Configurations(
       {required this.onBack,
       required this.onLogOut,
       required this.onDeleteAccount,

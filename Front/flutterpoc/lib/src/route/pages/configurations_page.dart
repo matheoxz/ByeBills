@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterpoc/src/view/configurations.dart';
@@ -17,10 +15,9 @@ class ConfigurationsPage extends Page {
 
   @override
   Route createRoute(BuildContext context) {
-    // TODO: implement createRoute
     return MaterialPageRoute(
       settings: this,
-      builder: (context) => ConfigurationsPageView(
+      builder: (context) => Configurations(
           onBack: onBack, onLogOut: onLogOut, onDeleteAccount: onDeleteAccount),
     );
   }

@@ -6,7 +6,6 @@ import 'package:flutterpoc/src/route/pages/new_bill_page.dart';
 import 'package:flutterpoc/src/route/pages/signup_page.dart';
 import 'package:flutterpoc/src/route/pages/unknown_page.dart';
 import 'package:flutterpoc/src/route/pages/configurations_page.dart';
-import 'package:flutterpoc/src/view/new_bill.dart';
 
 import 'app_configuration.dart';
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterpoc/config/get_it_registrations.dart';
 import 'package:flutterpoc/src/misc/animated_color_text.dart';
-import 'package:flutterpoc/src/services/login_services.dart';
 import 'package:flutterpoc/src/services/login_services_abstract.dart';
 
 class Login extends StatelessWidget {
