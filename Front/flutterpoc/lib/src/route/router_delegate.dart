@@ -5,6 +5,8 @@ import 'package:flutterpoc/src/route/pages/login_page.dart';
 import 'package:flutterpoc/src/route/pages/new_bill_page.dart';
 import 'package:flutterpoc/src/route/pages/signup_page.dart';
 import 'package:flutterpoc/src/route/pages/unknown_page.dart';
+import 'package:flutterpoc/src/route/pages/configurations_page.dart';
+import 'package:flutterpoc/src/view/new_bill.dart';
 
 import 'app_configuration.dart';
 
@@ -168,7 +170,17 @@ class BillsRouterDelegate extends RouterDelegate<MyAppConfiguration>
           })
         ];
       else if (!newBill && configurations && selectedBillId == null)
-        stack = [/*ConfigurationsPage*/];
+        stack = [
+          ConfigurationsPage(onBack: () {
+            configurations = false;
+          }, onDeleteAccount: () {
+            configurations = false;
+            loggedIn = false;
+          }, onLogOut: () {
+            configurations = false;
+            loggedIn = false;
+          })
+        ];
       else if (!newBill && !configurations && selectedBillId != null)
         stack = [
           BillDetailPage(
