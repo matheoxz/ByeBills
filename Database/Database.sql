@@ -23,42 +23,32 @@ CREATE DATABASE "ByeBills"
 
 \c ByeBills;
 
-CREATE TABLE public.bills
+CREATE TABLE users
 (
-    id integer NOT NULL DEFAULT nextval('bills_id_seq'::regclass),
-    name character varying(200) COLLATE pg_catalog."default" NOT NULL,
-    description character varying(500) COLLATE pg_catalog."default",
-    payday timestamp with time zone NOT NULL,
-    value double precision NOT NULL,
-    barcode character varying(100) COLLATE pg_catalog."default",
-    email character varying(100) COLLATE pg_catalog."default",
-    CONSTRAINT bills_pkey PRIMARY KEY (id),
-    CONSTRAINT bills_email_fkey FOREIGN KEY (email)
-        REFERENCES public.users (email) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE public.bills
-    OWNER to postgres;
-
-CREATE TABLE public.users
-(
-    email character varying(100) COLLATE pg_catalog."default" NOT NULL,
-    username character varying(100) COLLATE pg_catalog."default" NOT NULL,
-    name character varying(200) COLLATE pg_catalog."default" NOT NULL,
-    password character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    username VARCHAR(100) NOT NULL,
+    name VARCHAR(200) NOT NULL,
+    password VARCHAR(100) NOT NULL,
     CONSTRAINT users_pkey PRIMARY KEY (email),
     CONSTRAINT users_username_key UNIQUE (username)
 )
 
-TABLESPACE pg_default;
+CREATE TABLE bills
+(
+    id SERIAL,
+    name VARCHAR(200) NOT NULL,
+    description VARCHAR(500),
+    payday TIMESTAMP NOT NULL,
+    value DOUBLE PRECISION NOT NULL,
+    barcode VARCHAR(100),
+    email VARCHAR (100),
+    CONSTRAINT bills_pkey PRIMARY KEY (id),
+    CONSTRAINT bills_email_fkey FOREIGN KEY (email)
+        REFERENCES users (email)
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
 
-ALTER TABLE public.users
-    OWNER to postgres;
+GRANT ALL PRIVILEGES ON TABLE bills TO byebillsadm;
 
-GRANT ALL ON TABLE public.bills TO byebillsadm;
-
-GRANT ALL ON TABLE public.users TO byebillsadm;
+GRANT ALL PRIVILEGES ON TABLE users TO byebillsadm;
