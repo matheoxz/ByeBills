@@ -35,10 +35,10 @@ namespace ByeBoletos
             {
                 options.AddPolicy(name: "MyPolicy",
                     builder => { 
-                        builder.AllowAnyOrigin()
-                        .AllowAnyHeader()
-                        .WithMethods("POST", "GET", "DELETE", "PUT", "OPTIONS")
-                        .AllowAnyMethod();});
+                        builder
+                            .AllowAnyHeader()
+                            .AllowAnyOrigin()
+                            .AllowAnyMethod();});
             }); ;
 
             var key = Encoding.ASCII.GetBytes("fedaf7d8863b48e197b9287d492b708e");
@@ -98,6 +98,8 @@ namespace ByeBoletos
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors("MyPolicy");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -108,8 +110,6 @@ namespace ByeBoletos
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseCors("MyPolice");
 
             app.UseAuthentication();
 

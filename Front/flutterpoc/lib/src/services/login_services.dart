@@ -18,9 +18,7 @@ class LoginServices extends ILoginServices {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Access-Control-Allow-Origin': 'http://localhost:3000',
-          HttpHeaders.allowHeader: '*',
-          "Access-Control-Allow-Methods": 'POST, GET, DELETE, PUT, OPTIONS'
+          "Access-Control-Allow-Origin": '*'
         });
     print(res.body);
     return true;
