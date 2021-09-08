@@ -31,7 +31,15 @@ namespace ByeBoletos
         {
 
             services.AddControllers();
-            services.AddCors(); ;
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "MyPolicy",
+                    builder => { 
+                        builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .WithMethods("POST", "GET", "DELETE", "PUT", "OPTIONS")
+                        .AllowAnyMethod();});
+            }); ;
 
             var key = Encoding.ASCII.GetBytes("fedaf7d8863b48e197b9287d492b708e");
             services.AddAuthentication(x =>
@@ -100,6 +108,8 @@ namespace ByeBoletos
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("MyPolice");
 
             app.UseAuthentication();
 
