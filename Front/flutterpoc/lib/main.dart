@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutterpoc/config/get_it_registrations.dart';
+
 import 'config/configure_nonweb.dart'
     if (dart.library.html) 'config/configure_web.dart';
 import 'package:flutterpoc/src/route/router_delegate.dart';
 import 'package:flutterpoc/src/route/router_parser.dart';
 
-void main() {
+void main() async {
+  setupGetIt();
   configureApp();
   runApp(ByeBills());
 }

@@ -24,12 +24,9 @@ dependencies:
   flutter:
     sdk: flutter
   provider:
-  http:
+  http: ^0.13.0-nullsafety.0
   http_interceptor:
-  inject:
-    git:
-      url: https://github.com/google/inject.dart.git
-      path: package/inject
+  get_it:
   animated_text_kit: ^4.2.1
   intl:
   flutter_secure_storage:
@@ -44,11 +41,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner:
-  inject_generator:
-    git:
-      url: https://github.com/google/inject.dart.git
-      path: package/inject_generator
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

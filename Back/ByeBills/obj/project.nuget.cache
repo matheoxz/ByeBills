@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "80bpn/enLtmE5Vw8e8szWWR/0syQUNnxx2vOBPe2zshW+0pgA1lzfOWo0fMS1gtzhb1Lbj2f7Ln/92W1pRxF5g==",
+  "dgSpecHash": "7bcA0eE537QlhfjC4Y+Vz1LyTZkegZfvF2u7j/4sG5ebHu/MrnIZbsoW6mrsbKEhtFhzOo4rIA3YOKAIolS17w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\matheus.novaes\\Documents\\Flutter\\Back\\ByeBills\\ByeBills.csproj",
+  "projectFilePath": "C:\\Users\\matheus.novaes\\Documents\\Flutter\\ByeBills\\Back\\ByeBills\\ByeBills.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\matheus.novaes\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\matheus.novaes\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",

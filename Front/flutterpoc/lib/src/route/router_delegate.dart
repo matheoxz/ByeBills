@@ -5,24 +5,21 @@ import 'package:flutterpoc/src/route/pages/login_page.dart';
 import 'package:flutterpoc/src/route/pages/new_bill_page.dart';
 import 'package:flutterpoc/src/route/pages/signup_page.dart';
 import 'package:flutterpoc/src/route/pages/unknown_page.dart';
-import 'package:flutterpoc/src/view/new_bill.dart';
 
 import 'app_configuration.dart';
 
 class BillsRouterDelegate extends RouterDelegate<MyAppConfiguration>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<MyAppConfiguration> {
-  late GlobalKey<NavigatorState> _navigatorKey;
-
   //variables to the routing
   late bool _show404;
   bool get show404 => _show404;
   set show404(bool value) {
     _show404 = value;
-    if (value == true) {}
+
     notifyListeners();
   }
 
-  late bool _loggedIn;
+  late bool _loggedIn = false;
   bool get loggedIn => _loggedIn;
   set loggedIn(value) {
     //logout
@@ -34,7 +31,6 @@ class BillsRouterDelegate extends RouterDelegate<MyAppConfiguration>
   late bool _signup;
   bool get signup => _signup;
   set signup(bool value) {
-    //logout
     _signup = value;
     notifyListeners();
   }
@@ -42,7 +38,6 @@ class BillsRouterDelegate extends RouterDelegate<MyAppConfiguration>
   late bool _configurations;
   bool get configurations => _configurations;
   set configurations(value) {
-    //logout
     _configurations = value;
     notifyListeners();
   }
@@ -64,15 +59,16 @@ class BillsRouterDelegate extends RouterDelegate<MyAppConfiguration>
 
   _clear() {
     _show404 = false;
-    _loggedIn = false;
     _signup = false;
     _configurations = false;
     _selectedBillId = null;
     _newBill = false;
   }
 
+  late GlobalKey<NavigatorState> _navigatorKey;
+
   @override
-  GlobalKey<NavigatorState>? get navigatorKey => _navigatorKey;
+  GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
 
   BillsRouterDelegate() : _navigatorKey = GlobalKey<NavigatorState>() {
     _clear();

@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutterpoc/config/get_it_registrations.dart';
 import 'package:flutterpoc/src/misc/animated_color_text.dart';
+import 'package:flutterpoc/src/services/login_services.dart';
+import 'package:flutterpoc/src/services/login_services_abstract.dart';
 
 class Login extends StatelessWidget {
   final Function() onSignUp;
   final Function() onLogin;
+  late ILoginServices _loginServices;
 
-  Login({Key? key, required this.onLogin, required this.onSignUp})
-      : super(key: key);
+  Login({
+    Key? key,
+    required this.onLogin,
+    required this.onSignUp,
+  }) : super(key: key) {
+    _loginServices = getIt<ILoginServices>();
+  }
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -105,7 +114,7 @@ class Login extends StatelessWidget {
 
   loginButton() {
     return TextButton(
-      onPressed: onLogin,
+      onPressed: _login,
       child: Text(
         "login",
         style: TextStyle(color: Colors.white, fontSize: 20),
@@ -160,6 +169,11 @@ class Login extends StatelessWidget {
   }
 
   _forgotPassword() {}
+
+  _login() {
+    _loginServices.login(_emailController.text, _passwordController.text);
+    onLogin();
+  }
 
   _sizedBox({double space = 10}) {
     return SizedBox(height: space, width: space);

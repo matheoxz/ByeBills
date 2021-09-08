@@ -27,7 +27,7 @@ class BillRouteParser extends RouteInformationParser<MyAppConfiguration> {
     }
 
     //if there is two segments, there must be bill detail or new bill
-    else if (uri.pathSegments.length == 1) {
+    else if (uri.pathSegments.length == 2) {
       final first = uri.pathSegments[0].toLowerCase();
       final second = uri.pathSegments[1].toLowerCase();
 

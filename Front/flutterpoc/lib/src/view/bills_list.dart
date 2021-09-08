@@ -75,16 +75,13 @@ class _BillsListState extends State<BillsList> {
     return Center(
       child: Container(
           child: ListView(
-            children: [
-              for (var item in bills)
-                _listTile(item.id, item.name, item.value, item.payday)
-            ],
+            children: [for (var item in bills) _listTile(item)],
           ),
           width: widgetWidth),
     );
   }
 
-  _listTile(int id, String title, double value, DateTime expire) {
+  _listTile(BillModel bill) {
     return Slidable(
       actionPane: SlidableDrawerActionPane(),
       actionExtentRatio: 0.20,
@@ -95,14 +92,24 @@ class _BillsListState extends State<BillsList> {
             top: BorderSide(width: 2.0, color: Colors.grey.shade100),
           ),
         ),
-        height: MediaQuery.of(context).size.height / 10,
+        height: 80,
         child: Center(
           child: ListTile(
-            title: Text(title),
-            trailing: Column(children: [
-              Text('R\$${value.toStringAsFixed(2)}'),
-              Text('${expire.day}/${expire.month}/${expire.year}')
-            ]),
+            title: Text(
+              bill.name,
+              style: TextStyle(fontSize: 20),
+            ),
+            trailing: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'R\$${bill.value.toStringAsFixed(2)}',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  Text(
+                      '${bill.payday.day}/${bill.payday.month}/${bill.payday.year}')
+                ]),
           ),
         ),
       ),
@@ -111,7 +118,7 @@ class _BillsListState extends State<BillsList> {
           caption: 'Edit',
           color: Colors.amber,
           icon: Icons.edit,
-          onTap: () => onSelect(id),
+          onTap: () => onSelect(bill.id),
         ),
         IconSlideAction(
           caption: 'Delete',
@@ -124,6 +131,4 @@ class _BillsListState extends State<BillsList> {
   }
 
   _delete() {}
-
-  _edit() {}
 }
