@@ -1,3 +1,5 @@
+import '../main.dart';
+
 void configureApp() {
-  // No-op.
+  url = '10.0.2.2:5001';
 }

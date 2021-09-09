@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutterpoc/main.dart';
 import 'package:flutterpoc/src/models/user.dart';
 import 'package:flutterpoc/src/services/login_services_abstract.dart';
@@ -15,7 +17,9 @@ class LoginServices extends ILoginServices {
 
   @override
   Future<bool> login(String email, String password) async {
-    var res = await http.post(Uri.https(url, 'api/User/login'),
+    String path = 'api/User/login';
+
+    var res = await http.post(Uri.https(url, path),
         body: '{"email":"$email", "password":"$password"}',
         headers: {
           'Content-Type': 'application/json',

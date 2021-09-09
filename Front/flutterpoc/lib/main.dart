@@ -1,15 +1,19 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutterpoc/config/get_it_registrations.dart';
+import 'package:flutterpoc/src/helpers/http_certificate.dart';
 
 import 'config/configure_nonweb.dart'
     if (dart.library.html) 'config/configure_web.dart';
 import 'package:flutterpoc/src/route/router_delegate.dart';
 import 'package:flutterpoc/src/route/router_parser.dart';
 
-final String url = 'localhost:44305';
+late final String url;
 void main() async {
   setupGetIt();
   configureApp();
+  HttpOverrides.global = MyHttpOverrides();
   runApp(ByeBills());
 }
 

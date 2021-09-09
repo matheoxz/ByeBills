@@ -48,14 +48,22 @@ class _BillsListState extends State<BillsList> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: _appBar(),
-        body: _body(),
-        floatingActionButton: FloatingActionButton(
-          onPressed: onNewBill,
-          child: Icon(Icons.add),
-          backgroundColor: Colors.teal.shade800,
-        ));
+    return FutureBuilder(builder: (context, snapshot) {
+      if (snapshot.hasData) {
+        return Scaffold(
+            appBar: _appBar(),
+            body: _body(),
+            floatingActionButton: FloatingActionButton(
+              onPressed: onNewBill,
+              child: Icon(Icons.add),
+              backgroundColor: Colors.teal.shade800,
+            ));
+      }
+      if (snapshot.hasError) {
+        return Scaffold(appBar: _appBar(), body: _hasError());
+      }
+      return Scaffold(appBar: _appBar(), body: _isWaitingResponse());
+    });
   }
 
   _appBar() {
@@ -131,4 +139,80 @@ class _BillsListState extends State<BillsList> {
   }
 
   _delete() {}
+
+  _hasError() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            "😞",
+            style: TextStyle(fontSize: 30),
+          ),
+          Text(
+            'We coudn\'t complete the request',
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.grey,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  _isEmpty() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            "😅",
+            style: TextStyle(fontSize: 30),
+          ),
+          Text(
+            'You still have no bills to show',
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.grey,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  _isWaitingResponse() {
+    List<String> emojis = [
+      '💰',
+      '💸',
+      '🤑',
+      '💳',
+      '💵',
+      '💲',
+      '📄',
+      '📆',
+      '📅',
+      '💱'
+    ];
+
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            (emojis..shuffle()).first,
+            style: TextStyle(fontSize: 30),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          CircularProgressIndicator()
+        ],
+      ),
+    );
+  }
 }
