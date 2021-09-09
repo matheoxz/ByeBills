@@ -9,7 +9,7 @@ import 'config/configure_nonweb.dart'
 import 'package:flutterpoc/src/route/router_delegate.dart';
 import 'package:flutterpoc/src/route/router_parser.dart';
 
-late final String url;
+late String url;
 void main() async {
   setupGetIt();
   configureApp();

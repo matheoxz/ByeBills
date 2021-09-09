@@ -45,7 +45,7 @@ class BillModel {
       map['id'],
       map['name'],
       map['description'],
-      DateTime.fromMillisecondsSinceEpoch(map['payday']),
+      DateTime.parse(map['payday']),
       map['value'],
       map['barcode'],
     );

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutterpoc/config/get_it_registrations.dart';
 import 'package:flutterpoc/src/models/bill.dart';
+import 'package:flutterpoc/src/services/bill_service_abstract.dart';
 
 class BillsList extends StatefulWidget {
   final Function() onNewBill;
@@ -26,44 +28,40 @@ class _BillsListState extends State<BillsList> {
   final Function() onNewBill;
   final Function() onConfigurations;
   final Function(int id) onSelect;
+  late IBillService billService;
+
   _BillsListState(
       {required this.onConfigurations,
       required this.onNewBill,
-      required this.onSelect});
+      required this.onSelect}) {
+    billService = getIt<IBillService>();
+  }
 
-  List<BillModel> bills = [
-    BillModel(1, "AAAA", "description", DateTime.now(), 20.0, "654654654"),
-    BillModel(2, "BBBB", "description", DateTime.now(), 500.0, "654654654"),
-    BillModel(3, "CCCC", "description", DateTime.now(), 1000.0, "654654654"),
-    BillModel(4, "DDDD", "description", DateTime.now(), 5.0, "654654654"),
-    BillModel(5, "AAAA", "description", DateTime.now(), 20.0, "654654654"),
-    BillModel(6, "BBBB", "description", DateTime.now(), 500.0, "654654654"),
-    BillModel(7, "CCCC", "description", DateTime.now(), 1000.0, "654654654"),
-    BillModel(8, "DDDD", "description", DateTime.now(), 5.0, "654654654"),
-    BillModel(9, "AAAA", "description", DateTime.now(), 20.0, "654654654"),
-    BillModel(10, "BBBB", "description", DateTime.now(), 500.0, "654654654"),
-    BillModel(11, "CCCC", "description", DateTime.now(), 1000.0, "654654654"),
-    BillModel(12, "DDDD", "description", DateTime.now(), 5.0, "654654654"),
-  ];
+  late List<BillModel> bills;
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(builder: (context, snapshot) {
-      if (snapshot.hasData) {
-        return Scaffold(
-            appBar: _appBar(),
-            body: _body(),
-            floatingActionButton: FloatingActionButton(
-              onPressed: onNewBill,
-              child: Icon(Icons.add),
-              backgroundColor: Colors.teal.shade800,
-            ));
-      }
-      if (snapshot.hasError) {
-        return Scaffold(appBar: _appBar(), body: _hasError());
-      }
-      return Scaffold(appBar: _appBar(), body: _isWaitingResponse());
-    });
+    return FutureBuilder(
+        future: billService.getAllBills(),
+        builder: (context, AsyncSnapshot<List<BillModel>> snapshot) {
+          if (snapshot.hasData) {
+            bills = snapshot.data!;
+            if (bills.length == 0)
+              return Scaffold(appBar: _appBar(), body: _isEmpty());
+            return Scaffold(
+                appBar: _appBar(),
+                body: _body(),
+                floatingActionButton: FloatingActionButton(
+                  onPressed: onNewBill,
+                  child: Icon(Icons.add),
+                  backgroundColor: Colors.teal.shade800,
+                ));
+          }
+          if (snapshot.hasError)
+            return Scaffold(appBar: _appBar(), body: _hasError());
+
+          return Scaffold(appBar: _appBar(), body: _isWaitingResponse());
+        });
   }
 
   _appBar() {
