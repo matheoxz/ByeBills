@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Configurations extends StatelessWidget {
   final Function() onBack;
@@ -199,7 +200,7 @@ class Configurations extends StatelessWidget {
     return RawMaterialButton(
       fillColor: Colors.amberAccent,
       splashColor: Colors.amberAccent.shade100,
-      onPressed: onLogOut,
+      onPressed: _logout,
       shape: StadiumBorder(),
       child: Row(
         mainAxisSize: MainAxisSize.max,
@@ -251,6 +252,12 @@ class Configurations extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _logout() async {
+    SharedPreferences storage = await SharedPreferences.getInstance();
+    await storage.remove('jwt');
+    onLogOut();
   }
 
   Widget _sizedBox({double space = 10}) {

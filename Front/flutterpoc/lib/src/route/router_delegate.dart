@@ -6,6 +6,7 @@ import 'package:flutterpoc/src/route/pages/new_bill_page.dart';
 import 'package:flutterpoc/src/route/pages/signup_page.dart';
 import 'package:flutterpoc/src/route/pages/unknown_page.dart';
 import 'package:flutterpoc/src/route/pages/configurations_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_configuration.dart';
 
@@ -20,11 +21,11 @@ class BillsRouterDelegate extends RouterDelegate<MyAppConfiguration>
     notifyListeners();
   }
 
-  late bool _loggedIn = false;
+  late bool _loggedIn;
   bool get loggedIn => _loggedIn;
   set loggedIn(value) {
     //logout
-    if (_loggedIn == true && value == false) _clear();
+    if (value == false) _clear();
     _loggedIn = value;
     notifyListeners();
   }
@@ -72,6 +73,15 @@ class BillsRouterDelegate extends RouterDelegate<MyAppConfiguration>
   GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
 
   BillsRouterDelegate() : _navigatorKey = GlobalKey<NavigatorState>() {
+    _loggedIn = false;
+    SharedPreferences.getInstance().then((value) {
+      String? jwt = value.getString('jwt');
+      if (jwt == null)
+        loggedIn = false;
+      else
+        loggedIn = true;
+    });
+
     _clear();
   }
 
@@ -150,7 +160,6 @@ class BillsRouterDelegate extends RouterDelegate<MyAppConfiguration>
         SignUpPage(onPop: () {
           signup = false;
         }, onSignUp: () {
-          signup = false;
           loggedIn = true;
         })
       ];

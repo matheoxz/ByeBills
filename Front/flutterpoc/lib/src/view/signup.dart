@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutterpoc/config/get_it_registrations.dart';
+import 'package:flutterpoc/src/models/user.dart';
+import 'package:flutterpoc/src/services/login_services_abstract.dart';
 import 'package:progress_state_button/progress_button.dart';
 
 class SignUp extends StatefulWidget {
@@ -15,8 +18,11 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final Function() onPop;
   final Function() onSignUp;
+  late ILoginServices _loginServices;
 
-  _SignUpState({required this.onPop, required this.onSignUp});
+  _SignUpState({required this.onPop, required this.onSignUp}) {
+    _loginServices = getIt<ILoginServices>();
+  }
 
   final _nameController = TextEditingController();
 
@@ -191,7 +197,7 @@ class _SignUpState extends State<SignUp> {
       onPressed: () async => await _signup(),
       state: signupButtonState,
       progressIndicatorAligment: MainAxisAlignment.center,
-      radius: 45,
+      radius: 45.0,
     );
   }
 
@@ -201,10 +207,19 @@ class _SignUpState extends State<SignUp> {
         setState(() {
           signupButtonState = ButtonState.loading;
         });
-        setState(() {
-          signupButtonState = ButtonState.success;
-        });
-        onPop();
+        UserModel user = UserModel(_nameController.text,
+            _usernameController.text, _emailController.text);
+        bool res = await _loginServices.signup(user, _passwordController.text);
+        if (res) {
+          setState(() {
+            signupButtonState = ButtonState.success;
+          });
+          onPop();
+        } else {
+          setState(() {
+            signupButtonState = ButtonState.fail;
+          });
+        }
       } catch (e) {
         setState(() {
           signupButtonState = ButtonState.fail;

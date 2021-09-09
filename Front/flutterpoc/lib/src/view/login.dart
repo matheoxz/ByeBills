@@ -218,14 +218,22 @@ class _LoginState extends State<Login> {
           loginButtonState = ButtonState.loading;
         });
         //try to login
-        await widget._loginServices
+        bool res = await widget._loginServices
             .login(_emailController.text, _passwordController.text);
-        //if succes, set the button to succes state
-        setState(() {
-          loginButtonState = ButtonState.success;
-        });
-        //goes to home page
-        onLogin();
+
+        print(res);
+        if (res) {
+          //if succes, set the button to succes state
+          setState(() {
+            loginButtonState = ButtonState.success;
+          });
+          //goes to home page
+          onLogin();
+        } else {
+          setState(() {
+            loginButtonState = ButtonState.fail;
+          });
+        }
       } catch (e) {
         setState(() {
           loginButtonState = ButtonState.fail;
