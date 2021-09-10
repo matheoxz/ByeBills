@@ -1,7 +1,10 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Configurations extends StatelessWidget {
+class Configurations extends StatefulWidget {
   final Function() onBack;
   final Function() onLogOut;
   final Function() onDeleteAccount;
@@ -13,10 +16,42 @@ class Configurations extends StatelessWidget {
       Key? key})
       : super(key: key);
 
-  String _name = "Jauzin";
-  String _username = "jaum12";
-  String _email = "jau@unesp.br";
+  @override
+  State<Configurations> createState() => _ConfigurationsState(
+      onBack: onBack, onDeleteAccount: onDeleteAccount, onLogOut: onLogOut);
+}
+
+class _ConfigurationsState extends State<Configurations> {
+  final Function() onBack;
+  final Function() onLogOut;
+  final Function() onDeleteAccount;
+
+  _ConfigurationsState(
+      {required this.onBack,
+      required this.onLogOut,
+      required this.onDeleteAccount});
+
+  late String _name = '';
+
+  late String _username = '';
+
+  late String _email = '';
+
   late MediaQueryData media;
+
+  @override
+  void initState() {
+    SharedPreferences.getInstance().then((value) {
+      String? jwt = value.getString('jwt');
+      Map<String, dynamic> res = JwtDecoder.decode(jwt!);
+      setState(() {
+        _name = res['unique_name'][1];
+        _username = res['unique_name'][0];
+        _email = res['email'];
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +69,7 @@ class Configurations extends StatelessWidget {
           backgroundColor: Colors.teal.shade300,
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: onBack,
+            onPressed: widget.onBack,
           )),
       body: SingleChildScrollView(
         child: Column(
@@ -86,7 +121,7 @@ class Configurations extends StatelessWidget {
         backgroundColor: Colors.teal.shade300,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: onBack,
+          onPressed: widget.onBack,
         ),
       ),
       body: SingleChildScrollView(
@@ -229,7 +264,7 @@ class Configurations extends StatelessWidget {
     return RawMaterialButton(
       fillColor: Colors.red.shade400,
       splashColor: Colors.red.shade300,
-      onPressed: onDeleteAccount,
+      onPressed: widget.onDeleteAccount,
       shape: StadiumBorder(),
       child: Row(
         mainAxisSize: MainAxisSize.max,
@@ -257,7 +292,7 @@ class Configurations extends StatelessWidget {
   _logout() async {
     SharedPreferences storage = await SharedPreferences.getInstance();
     await storage.remove('jwt');
-    onLogOut();
+    widget.onLogOut();
   }
 
   Widget _sizedBox({double space = 10}) {

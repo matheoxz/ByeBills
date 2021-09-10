@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class BillModel {
-  final int id;
+  final int? id;
   final String name;
   final String description;
   final DateTime payday;
@@ -46,7 +46,7 @@ class BillModel {
       map['name'],
       map['description'],
       DateTime.parse(map['payday']),
-      map['value'],
+      double.parse(map['value'].toString()),
       map['barcode'],
     );
   }

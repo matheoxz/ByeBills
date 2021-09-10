@@ -55,6 +55,7 @@ namespace ByeBoletosRepository
             {
                 Bill bill = db.Bills.Find(id);
                 db.Bills.Remove(bill);
+                db.SaveChanges();
             }
         }
     }

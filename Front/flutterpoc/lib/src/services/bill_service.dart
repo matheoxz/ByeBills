@@ -11,7 +11,7 @@ class BillService extends IBillService {
     SharedPreferences storage = await SharedPreferences.getInstance();
     String? jwt = storage.getString('jwt');
     var res = await http.get(Uri.https(url, 'api/Bill'), headers: {
-      'Authorization': 'Bearer ${jwt}',
+      'Authorization': 'Bearer $jwt',
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       "Access-Control-Allow-Origin": '*'
@@ -29,28 +29,28 @@ class BillService extends IBillService {
   Future<bool> deleteBill(int id) async {
     SharedPreferences storage = await SharedPreferences.getInstance();
     String? jwt = storage.getString('jwt');
-    var res = await http.delete(Uri.https(url, 'api/Bill/${id}'), headers: {
-      'Authorization': 'Bearer ${jwt}',
+    var res = await http.delete(Uri.https(url, 'api/Bill/$id'), headers: {
+      'Authorization': 'Bearer $jwt',
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       "Access-Control-Allow-Origin": '*'
     });
 
-    return res.statusCode == 200 ? true : false;
+    return res.statusCode == 204 ? true : false;
   }
 
   @override
   Future<BillModel> getBill(int id) async {
     SharedPreferences storage = await SharedPreferences.getInstance();
     String? jwt = storage.getString('jwt');
-    var res = await http.get(Uri.https(url, 'api/Bill/${id}'), headers: {
-      'Authorization': 'Bearer ${jwt}',
+    var res = await http.get(Uri.https(url, 'api/Bill/$id'), headers: {
+      'Authorization': 'Bearer $jwt',
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       "Access-Control-Allow-Origin": '*'
     });
 
-    BillModel returnedBill = jsonDecode(res.body);
+    BillModel returnedBill = BillModel.fromJson(res.body);
     return returnedBill;
   }
 
@@ -58,19 +58,20 @@ class BillService extends IBillService {
   Future<bool> postBill(BillModel bill) async {
     SharedPreferences storage = await SharedPreferences.getInstance();
     String? jwt = storage.getString('jwt');
-    var res = await http.post(Uri.https(url, 'api/Bill'), headers: {
-      'Authorization': 'Bearer ${jwt}',
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      "Access-Control-Allow-Origin": '*',
-    }, body: {
-      "id": "${bill.id}",
-      "name": "${bill.name}",
-      "description": "${bill.description}",
-      "payday": "${bill.payday}",
-      "value": "${bill.value}",
-      "barcode": "${bill.barcode}",
-    });
+    var res = await http.post(Uri.https(url, 'api/Bill'),
+        headers: {
+          'Authorization': 'Bearer $jwt',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          "Access-Control-Allow-Origin": '*',
+        },
+        body: jsonEncode({
+          "name": bill.name,
+          "description": bill.description,
+          "payday": bill.payday.toIso8601String(),
+          "value": bill.value,
+          "barcode": bill.barcode,
+        }));
 
     return res.statusCode == 200 ? true : false;
   }
@@ -79,19 +80,21 @@ class BillService extends IBillService {
   Future<bool> putBill(BillModel bill) async {
     SharedPreferences storage = await SharedPreferences.getInstance();
     String? jwt = storage.getString('jwt');
-    var res = await http.put(Uri.https(url, 'api/Bill/${bill.id}'), headers: {
-      'Authorization': 'Bearer ${jwt}',
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      "Access-Control-Allow-Origin": '*',
-    }, body: {
-      "id": "${bill.id}",
-      "name": "${bill.name}",
-      "description": "${bill.description}",
-      "payday": "${bill.payday}",
-      "value": "${bill.value}",
-      "barcode": "${bill.barcode}",
-    });
+    var res = await http.put(Uri.https(url, 'api/Bill/${bill.id}'),
+        headers: {
+          'Authorization': 'Bearer $jwt',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          "Access-Control-Allow-Origin": '*',
+        },
+        body: jsonEncode({
+          "id": "${bill.id}",
+          "name": "${bill.name}",
+          "description": "${bill.description}",
+          "payday": "${bill.payday.toIso8601String()}",
+          "value": "${bill.value}",
+          "barcode": "${bill.barcode}",
+        }));
 
     return res.statusCode == 200 ? true : false;
   }

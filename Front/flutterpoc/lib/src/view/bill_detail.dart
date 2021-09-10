@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutterpoc/config/get_it_registrations.dart';
 import 'package:flutterpoc/src/misc/currency_formatter.dart';
 import 'package:flutterpoc/src/models/bill.dart';
+import 'package:flutterpoc/src/services/bill_service_abstract.dart';
 
 class BillDetail extends StatefulWidget {
   final int billId;
@@ -18,10 +20,13 @@ class BillDetail extends StatefulWidget {
 class _BillDetailState extends State<BillDetail> {
   final billId;
   final Function() onBack;
+  late IBillService billService;
 
-  _BillDetailState({required this.billId, required this.onBack});
+  _BillDetailState({required this.billId, required this.onBack}) {
+    billService = getIt<IBillService>();
+  }
 
-  late BillModel bill;
+  BillModel? bill;
 
   final _nameController = TextEditingController();
 
@@ -35,46 +40,49 @@ class _BillDetailState extends State<BillDetail> {
 
   final _barcodeController = TextEditingController();
 
-  List<BillModel> bills = [
-    BillModel(1, "AAAA", "description", DateTime.now(), 20.0, "654654654"),
-    BillModel(2, "BBBB", "description", DateTime.now(), 500.0, "654654654"),
-    BillModel(3, "CCCC", "description", DateTime.now(), 1000.0, "654654654"),
-    BillModel(4, "DDDD", "description", DateTime.now(), 5.0, "654654654"),
-    BillModel(5, "AAAA", "description", DateTime.now(), 20.0, "654654654"),
-    BillModel(6, "BBBB", "description", DateTime.now(), 500.0, "654654654"),
-    BillModel(7, "CCCC", "description", DateTime.now(), 1000.0, "654654654"),
-    BillModel(8, "DDDD", "description", DateTime.now(), 5.0, "654654654"),
-    BillModel(9, "AAAA", "description", DateTime.now(), 20.0, "654654654"),
-    BillModel(10, "BBBB", "description", DateTime.now(), 500.0, "654654654"),
-    BillModel(11, "CCCC", "description", DateTime.now(), 1000.0, "654654654"),
-    BillModel(12, "DDDD", "description", DateTime.now(), 5.0, "654654654"),
-  ];
-
-  @override
-  void initState() {
-    bill = bills.where((element) => element.id == billId).first;
-    _nameController.text = bill.name;
-    _descriptionController.text = bill.description;
-    _dateTime = bill.payday;
-    _dateTimeController.text =
-        "${_dateTime!.day}/${_dateTime!.month}/${_dateTime!.year}";
-    _valueController.text = "R\$ ${bill.value}";
-    _barcodeController.text = bill.barcode;
-
-    super.initState();
-  }
+  String title = '';
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _appBar(),
-      body: _body(context),
-    );
+    return FutureBuilder(
+        key: UniqueKey(),
+        future: billService.getBill(billId),
+        builder: (context, AsyncSnapshot<BillModel> snapshot) {
+          if (snapshot.hasData) {
+            if (bill == null) {
+              bill = snapshot.data!;
+              title = bill!.name;
+              _nameController.text = bill!.name;
+              _descriptionController.text = bill!.description;
+              _dateTime = bill!.payday;
+              _dateTimeController.text =
+                  "${_dateTime!.day}/${_dateTime!.month}/${_dateTime!.year}";
+              _valueController.text = "R\$ ${bill!.value.toStringAsFixed(2)}";
+              _barcodeController.text = bill!.barcode;
+            }
+
+            return Scaffold(
+              appBar: _appBar(),
+              body: _body(context),
+            );
+          } else if (snapshot.hasError) {
+            title = '😞';
+            return Scaffold(
+              appBar: _appBar(),
+              body: _hasError(),
+            );
+          }
+          title = '';
+          return Scaffold(
+            appBar: _appBar(),
+            body: _isWaitingResponse(),
+          );
+        });
   }
 
   _appBar() {
     return AppBar(
-      title: Text(bill.name),
+      title: Text(title),
       centerTitle: true,
       backgroundColor: Colors.teal.shade300,
       leading: IconButton(
@@ -141,9 +149,12 @@ class _BillDetailState extends State<BillDetail> {
     );
   }
 
+  final _formKey = GlobalKey<FormState>();
+
   _textFields() {
     return Flexible(
       child: Form(
+        key: _formKey,
         child: ListView(
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           children: [
@@ -263,12 +274,122 @@ class _BillDetailState extends State<BillDetail> {
     );
   }
 
-  _updateBill() {
-    onBack();
+  _updateBill() async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        String doubleToParse = _valueController.text
+            .replaceRange(0, 1, '')
+            .replaceFirst(RegExp(r'\$'), '')
+            .replaceAll(RegExp(r'\.'), '')
+            .replaceFirst(RegExp(r','), '.')
+            .trim();
+
+        bool res = await billService.putBill(BillModel(
+            billId,
+            _nameController.text,
+            _descriptionController.text,
+            _dateTime!,
+            double.parse(doubleToParse),
+            _barcodeController.text));
+
+        if (res)
+          onBack();
+        else
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            backgroundColor: Colors.amber,
+            content: Text('error'),
+            elevation: 5.0,
+          ));
+      } catch (e) {
+        print(e);
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: Colors.amber,
+          content: Text('error'),
+          elevation: 5.0,
+        ));
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        backgroundColor: Colors.amber,
+        content: Text("invalid fields, please fill it correctly"),
+        elevation: 5.0,
+      ));
+    }
   }
 
-  _deleteBill() {
-    onBack();
+  _deleteBill() async {
+    try {
+      bool res = await billService.deleteBill(billId);
+
+      if (res)
+        onBack();
+      else
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: Colors.amber,
+          content: Text("error on delete, try again later"),
+          elevation: 5.0,
+        ));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        backgroundColor: Colors.amber,
+        content: Text("error on delete, try again later"),
+        elevation: 5.0,
+      ));
+    }
+  }
+
+  _isWaitingResponse() {
+    List<String> emojis = [
+      '💰',
+      '💸',
+      '🤑',
+      '💳',
+      '💵',
+      '💲',
+      '📄',
+      '📆',
+      '📅',
+      '💱'
+    ];
+
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            (emojis..shuffle()).first,
+            style: TextStyle(fontSize: 30),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          CircularProgressIndicator()
+        ],
+      ),
+    );
+  }
+
+  _hasError() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            "😞",
+            style: TextStyle(fontSize: 30),
+          ),
+          Text(
+            'I think this bill doesn\'t exist',
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.grey,
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   _sizedBox({double space = 10}) {

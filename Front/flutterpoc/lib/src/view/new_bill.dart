@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutterpoc/config/get_it_registrations.dart';
 import 'package:flutterpoc/src/misc/currency_formatter.dart';
+import 'package:flutterpoc/src/models/bill.dart';
+import 'package:flutterpoc/src/services/bill_service_abstract.dart';
 
 class NewBill extends StatefulWidget {
   final Function() onBack;
@@ -12,8 +15,11 @@ class NewBill extends StatefulWidget {
 
 class _NewBillState extends State<NewBill> {
   final Function() onBack;
+  late IBillService billService;
 
-  _NewBillState({required this.onBack});
+  _NewBillState({required this.onBack}) {
+    billService = getIt<IBillService>();
+  }
 
   final _nameController = TextEditingController();
 
@@ -75,7 +81,6 @@ class _NewBillState extends State<NewBill> {
   _page(context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
-      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Align(
           alignment: Alignment.bottomCenter,
@@ -100,8 +105,8 @@ class _NewBillState extends State<NewBill> {
 
   _form() {
     return Flexible(
-      key: _formKey,
       child: Form(
+        key: _formKey,
         child: ListView(
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           children: [
@@ -194,7 +199,7 @@ class _NewBillState extends State<NewBill> {
 
   _addBillButton() {
     return TextButton(
-      onPressed: _addBill,
+      onPressed: () async => await _addBill(),
       child: Text(
         "add",
         style: TextStyle(color: Colors.white, fontSize: 20),
@@ -207,9 +212,40 @@ class _NewBillState extends State<NewBill> {
     );
   }
 
-  _addBill() {
+  Future<void> _addBill() async {
     if (_formKey.currentState!.validate()) {
-      try {} catch (e) {}
+      try {
+        String doubleToParse = _valueController.text
+            .replaceRange(0, 1, '')
+            .replaceFirst(RegExp(r'\$'), '')
+            .replaceAll(RegExp(r'\.'), '')
+            .replaceFirst(RegExp(r','), '.')
+            .trim();
+
+        bool res = await billService.postBill(BillModel(
+            null,
+            _nameController.text,
+            _descriptionController.text,
+            _dateTime!,
+            double.parse(doubleToParse),
+            _barcodeController.text));
+
+        if (res)
+          onBack();
+        else
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            backgroundColor: Colors.amber,
+            content: Text('error'),
+            elevation: 5.0,
+          ));
+      } catch (e) {
+        print(e);
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: Colors.amber,
+          content: Text('error'),
+          elevation: 5.0,
+        ));
+      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         backgroundColor: Colors.amber,

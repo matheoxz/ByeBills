@@ -47,21 +47,29 @@ class _BillsListState extends State<BillsList> {
           if (snapshot.hasData) {
             bills = snapshot.data!;
             if (bills.length == 0)
-              return Scaffold(appBar: _appBar(), body: _isEmpty());
+              return Scaffold(
+                appBar: _appBar(),
+                body: _isEmpty(),
+                floatingActionButton: _addButton(),
+              );
             return Scaffold(
                 appBar: _appBar(),
                 body: _body(),
-                floatingActionButton: FloatingActionButton(
-                  onPressed: onNewBill,
-                  child: Icon(Icons.add),
-                  backgroundColor: Colors.teal.shade800,
-                ));
+                floatingActionButton: _addButton());
           }
           if (snapshot.hasError)
             return Scaffold(appBar: _appBar(), body: _hasError());
 
           return Scaffold(appBar: _appBar(), body: _isWaitingResponse());
         });
+  }
+
+  _addButton() {
+    return FloatingActionButton(
+      onPressed: onNewBill,
+      child: Icon(Icons.add),
+      backgroundColor: Colors.teal.shade800,
+    );
   }
 
   _appBar() {
@@ -124,19 +132,40 @@ class _BillsListState extends State<BillsList> {
           caption: 'Edit',
           color: Colors.amber,
           icon: Icons.edit,
-          onTap: () => onSelect(bill.id),
+          onTap: () => onSelect(bill.id!),
         ),
         IconSlideAction(
           caption: 'Delete',
           color: Colors.red,
           icon: Icons.delete,
-          onTap: () => _delete(),
+          onTap: () => _delete(bill.id!),
         ),
       ],
     );
   }
 
-  _delete() {}
+  _delete(int id) async {
+    try {
+      bool res = await billService.deleteBill(id);
+
+      if (res)
+        setState(() {
+          bills.removeWhere((element) => element.id == id);
+        });
+      else
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: Colors.amber,
+          content: Text("error on delete, try again later"),
+          elevation: 5.0,
+        ));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        backgroundColor: Colors.amber,
+        content: Text("error on delete, try again later"),
+        elevation: 5.0,
+      ));
+    }
+  }
 
   _hasError() {
     return Center(

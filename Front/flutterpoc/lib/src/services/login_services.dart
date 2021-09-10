@@ -1,7 +1,4 @@
 import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutterpoc/main.dart';
 import 'package:flutterpoc/src/models/user.dart';
 import 'package:flutterpoc/src/services/login_services_abstract.dart';

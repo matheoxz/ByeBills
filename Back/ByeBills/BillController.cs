@@ -49,6 +49,7 @@ namespace ByeBoletos
             {
                 string email = GetEmail();
                 bill.Email = email;
+                bill.Id = null;
                 _repository.Add(bill);
                 return Ok();
             }

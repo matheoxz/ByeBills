@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutterpoc/config/get_it_registrations.dart';
 import 'package:flutterpoc/src/misc/animated_color_text.dart';

@@ -6,6 +6,7 @@ import 'package:flutterpoc/src/route/pages/new_bill_page.dart';
 import 'package:flutterpoc/src/route/pages/signup_page.dart';
 import 'package:flutterpoc/src/route/pages/unknown_page.dart';
 import 'package:flutterpoc/src/route/pages/configurations_page.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_configuration.dart';
@@ -78,8 +79,12 @@ class BillsRouterDelegate extends RouterDelegate<MyAppConfiguration>
       String? jwt = value.getString('jwt');
       if (jwt == null)
         loggedIn = false;
-      else
-        loggedIn = true;
+      else {
+        if (JwtDecoder.isExpired(jwt))
+          loggedIn = false;
+        else
+          loggedIn = true;
+      }
     });
 
     _clear();
