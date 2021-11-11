@@ -11,7 +11,8 @@ class BillRouteParser extends RouteInformationParser<MyAppConfiguration> {
     if (uri.pathSegments.length == 0)
       return MyAppConfiguration.bills();
 
-    //if there is one segment in the location, there must be login, home, configuration or signup page
+    //if there is one segment in the location, there must be login, home,
+    //configuration or signup page
     else if (uri.pathSegments.length == 1) {
       final first = uri.pathSegments[0].toLowerCase();
       if (first == 'bills')

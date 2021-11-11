@@ -25,8 +25,6 @@ class BillsRouterDelegate extends RouterDelegate<MyAppConfiguration>
   late bool _loggedIn;
   bool get loggedIn => _loggedIn;
   set loggedIn(value) {
-    //logout
-    if (value == false) _clear();
     _loggedIn = value;
     notifyListeners();
   }
@@ -69,7 +67,6 @@ class BillsRouterDelegate extends RouterDelegate<MyAppConfiguration>
   }
 
   late GlobalKey<NavigatorState> _navigatorKey;
-
   @override
   GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
 
