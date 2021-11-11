@@ -29,6 +29,7 @@ class BillService extends IBillService {
   Future<bool> deleteBill(int id) async {
     SharedPreferences storage = await SharedPreferences.getInstance();
     String? jwt = storage.getString('jwt');
+    print(jwt);
     var res = await http.delete(Uri.https(url, 'api/Bill/$id'), headers: {
       'Authorization': 'Bearer $jwt',
       'Content-Type': 'application/json',
